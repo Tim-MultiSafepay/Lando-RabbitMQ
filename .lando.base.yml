@@ -1,0 +1,47 @@
+#################
+# RabbitMQ Base #
+####################################################
+#                                                  #
+# Please keep in mind that Lando is still in Beta! #
+# for overriding the settings please make a .lando #
+#                                                  #
+####################################################
+
+# Name of the project
+name: RabbitMQ
+
+# Set a reachable management site ( User: guest, Pass: guest )
+proxy:
+    rabbitmq:
+      - rabbit.lndo.site:15672
+
+# Setup RabbitMQ service using "compose"
+services:
+  rabbitmq:
+    type: compose
+    services:
+     # Grab RabbitMQ management image
+     image: "rabbitmq:3-management"
+     hostname: "rabbit"
+
+     # Start the server for RabbitMQ
+     command: rabbitmq-server
+
+     # Expose RabbitMQ Ports
+     ports:
+      - '15672:15672'
+      - '5672:5672'
+
+     # Link RabbitMQ Configs
+     volumes:
+      - rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
+     labels:
+       NAME: "rabbitmq"
+
+tooling:
+  # Set up command "Lando rabbit" for basic RabbitMQ commands
+  rabbit:
+    service: rabbitmq
+    # User must be root to prevent erlang cookie error
+    user: root
+    cmd: rabbitmqctl
