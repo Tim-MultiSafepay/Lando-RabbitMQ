@@ -45,3 +45,7 @@ tooling:
     # User must be root to prevent erlang cookie error
     user: root
     cmd: rabbitmqctl
+  # Setup command "lando rabbit-ip" to get the ip address
+  rabbit-ip:
+    service: rabbitmq
+    cmd: hostname -I | cut -d' ' -f1

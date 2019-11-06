@@ -33,6 +33,15 @@ Example: ```lando rabbit```
 
 Note: This command can only be run where the ```.lando.base.yml``` is located!
 
+________________________________________________________________________________
+
+
+To get the RabbitMQ ip address you can simply use:
+
+```lando rabbit-ip```
+
+This will return the ip address which you can use in your projects
+
 # Custom Settings
 
 To override settings please make an own: ```.lando.yml```
