@@ -37,7 +37,11 @@ services:
       - rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
      labels:
        NAME: "rabbitmq"
-
+# Shows IP address on 'lando start'
+events:
+  post-start:
+    - rabbitmq: echo -e "\n\e[36mRABBITMQ IP ADDRESS:\e[32m"
+    - rabbitmq: hostname -i | cut -d' ' -f1
 tooling:
   # Set up command "Lando rabbit" for basic RabbitMQ commands
   rabbit:
@@ -48,4 +52,6 @@ tooling:
   # Setup command "lando rabbit-ip" to get the ip address
   rabbit-ip:
     service: rabbitmq
-    cmd: hostname -I | cut -d' ' -f1
+    cmd:    
+      - echo -e "\n\e[36mRABBITMQ IP ADDRESS:\e[32m"
+      - hostname -i | cut -d' ' -f1
